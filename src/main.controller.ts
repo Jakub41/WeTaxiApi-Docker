@@ -9,7 +9,7 @@ export class Controller {
     this.routes();
   }
 
-  public routes() {
-    this.app.route('/').get(this.weTaxiService.welcomeMessage);
-  }
+  public routes = () => {
+    return this.app.route('/').get(this.weTaxiService.welcomeMessage);
+  };
 }

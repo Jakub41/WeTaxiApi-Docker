@@ -7,4 +7,4 @@ COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 COPY ./.env /usr/src/app/.env
 RUN npm install
 ADD . /usr/src/app
-CMD [ "npm", "start" ]
+CMD npm run dev

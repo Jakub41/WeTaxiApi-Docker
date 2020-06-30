@@ -9,14 +9,14 @@ class App {
   public app: Application;
 
   // Declaring our controller
-  public pokeController: Controller;
+  public weTaxiController: Controller;
 
   constructor() {
     this.app = express();
     this.setConfig();
 
     // Creating and assigning a new instance of our controller
-    this.pokeController = new Controller(this.app);
+    this.weTaxiController = new Controller(this.app);
   }
 
   private setConfig() {
