@@ -6,10 +6,7 @@ services:
     image: wetaxitask
     restart: always
     build: .
-    environment:
-      - NODE_ENV: "${NODE_ENV}"
-      - PORT: "${PORT}"
-      - WELCOME_MESSAGE: "${WELCOME_MESSAGE}"
+    env_file: ./.env
     ports:
       - 4000:4000
     volumes:
@@ -27,7 +24,7 @@ services:
     volumes:
       - ./data:/data/db
     environment:
-      - MONGO_INITDB_DATABASE = wetaxitask
+      - MONGO_INITDB_DATABASE=wetaxitask
 
   redis:
     container_name: wetaxitask_redis
