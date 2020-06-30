@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  wetaxitask:
+    container_name: wetaxitask_api_dev
+    image: wetaxitask
+    restart: always
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 4000:4000
+    volumes: 
+      - .:/usr/src/app
+    links: 
+      - redis
+      - monngodb
+
+  monngodb:
+    container_name: wetaxitask_mongodb
+    image: mongo:latest
+    restart: always
+    ports: 
+      - 27017:27017
+    volumes:
+      - data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE= wetaxitask
+  
+  redis:
+    container_name: wetaxitask_redis
+    image: redis:latest
+    ports: 
+      - 5000:5000
+  
+  volumes: 
+    data:
