@@ -2,9 +2,9 @@
   "name": "wetaxitask",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && node dist/server.js",
     "dev": "nodemon"
   },
   "keywords": [],
