@@ -10,9 +10,9 @@ services:
       NODE_ENV: production
     ports:
       - 4000:4000
-    volumes: 
-      - .:/usr/src/app
-    links: 
+    volumes:
+      - ./usr/src/app
+    links:
       - redis
       - monngodb
 
@@ -20,18 +20,15 @@ services:
     container_name: wetaxitask_mongodb
     image: mongo:latest
     restart: always
-    ports: 
+    ports:
       - 27017:27017
     volumes:
-      - data:/data/db
+      - ./data:/data/db
     environment:
-      - MONGO_INITDB_DATABASE= wetaxitask
-  
+      - MONGO_INITDB_DATABASE = wetaxitask
+
   redis:
     container_name: wetaxitask_redis
     image: redis:latest
-    ports: 
+    ports:
       - 5000:5000
-  
-  volumes: 
-    data:
