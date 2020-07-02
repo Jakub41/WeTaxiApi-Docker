@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { errorHandler } from './middleware/error.middleware';
 import { notFoundHandler } from './middleware/notFound.middleware';
+import morganBody from 'morgan-body';
 
 class App {
   public app: Application;
@@ -32,6 +33,8 @@ class App {
     this.app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
     // Enables cors
     this.app.use(cors());
+    // Morgan Logging
+    morganBody(this.app, { theme: 'darkened' });
   }
 
   private setErrors() {
