@@ -10,6 +10,6 @@ export class Controller {
   }
 
   public routes = () => {
-    return this.app.route('/').get(this.weTaxiService.welcomeMessage);
+    return this.app.route('/welcome').get(this.weTaxiService.welcomeMessage);
   };
 }
