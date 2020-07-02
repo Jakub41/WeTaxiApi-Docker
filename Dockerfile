@@ -8,7 +8,7 @@ COPY ./.env /usr/src/app/.env
 RUN npm install
 ADD . /usr/src/app
 RUN npm run build
-# CMD npm run dev
+CMD npm run dev
 
 # Production stage
 FROM node:12.18-alpine AS production

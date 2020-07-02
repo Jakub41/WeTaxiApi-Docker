@@ -4,6 +4,8 @@ import express, { Application } from 'express';
 import { Controller } from './main.controller';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { errorHandler } from './middleware/error.middleware';
+import { notFoundHandler } from './middleware/notFound.middleware';
 
 class App {
   public app: Application;
@@ -13,10 +15,14 @@ class App {
 
   constructor() {
     this.app = express();
+    // Main App configuration
     this.setConfig();
 
     // Creating and assigning a new instance of our controller
     this.weTaxiController = new Controller(this.app);
+
+    // Errors always in the bottom as the cycle of Req/Resp closing with it
+    this.setErrors();
   }
 
   private setConfig() {
@@ -26,6 +32,12 @@ class App {
     this.app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
     // Enables cors
     this.app.use(cors());
+  }
+
+  private setErrors() {
+    // Error Handling
+    this.app.use(errorHandler);
+    this.app.use(notFoundHandler);
   }
 }
 
