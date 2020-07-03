@@ -13,9 +13,9 @@ services:
       - .:/usr/src/app
     links:
       - redis
-      - monngodb
+      - mongodb
 
-  monngodb:
+  mongodb:
     container_name: wetaxitask_mongodb
     image: mongo:latest
     restart: always
