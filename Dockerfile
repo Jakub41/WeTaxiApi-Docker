@@ -7,8 +7,8 @@ COPY ["tsconfig.json", "package.json", "package-lock.json*", "npm-shrinkwrap.jso
 COPY ./.env /usr/src/app/.env
 RUN npm install
 ADD . /usr/src/app
-RUN npm run build
 CMD npm run dev
+RUN npm run build
 
 # Production stage
 FROM node:12.18-alpine AS production
@@ -18,4 +18,4 @@ RUN npm install --production
 COPY --from=base-builder /usr/src/app/dist ./dist
 COPY package* ./
 EXPOSE 8080
-CMD npm start
+#CMD npm start
