@@ -1,12 +1,19 @@
-import mongoose from 'mongoose';
+import { model, Schema } from 'mongoose';
+import { ITaxi } from './taxi.interface';
 
 // Taxi schema
-const TaxiSchema = new mongoose.Schema({
-  lat: String,
-  lon: String,
-  bonus: Boolean,
-  queue: Number,
+const TaxiSchema = new Schema({
+	taxiNumber: {
+		type: String,
+		required: true,
+	},
+	lastLocationLatitude: {
+		type: Number,
+	},
+	lastLocationLongitude: {
+		type: Number,
+	},
 });
 
-// Creating our model
-export const Taxi = mongoose.model('Taxi', TaxiSchema);
+// Creating our model with interface
+export default model<ITaxi>('Taxi', TaxiSchema);
