@@ -63,6 +63,7 @@ class App {
     mongoose.connect(MONGO_DB, {
       useNewUrlParser: true,
     });
+    () => console.log('MONGO LIVE');
   }
 }
 
