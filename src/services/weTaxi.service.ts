@@ -218,6 +218,7 @@ export class WeTaxiService {
 	): Promise<Response> => {
 		try {
 			await models.Taxi.deleteMany({});
+			await models.ParkingLot.deleteMany({});
 			console.log('All Data successfully deleted');
 			return res.status(200).send('All was deleted from DB');
 		} catch (e) {
