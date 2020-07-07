@@ -7,7 +7,6 @@ const TaxiSchema = new Schema({
 		type: String,
 		required: true,
 		unique: true,
-		index: true,
 	},
 	lastLocationLatitude: {
 		type: Number,
