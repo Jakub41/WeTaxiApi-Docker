@@ -59,6 +59,7 @@ class App {
 		this.initializeParkingLot();
 	}
 
+	// Created the parking lots if not present in the initial run
 	private async initializeParkingLot() {
 		await models.ParkingLot.find({})
 			.then((parkingLot) => {
