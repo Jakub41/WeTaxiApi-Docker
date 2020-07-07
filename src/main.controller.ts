@@ -12,10 +12,19 @@ export class Controller {
 	public routes = () => {
 		// Welcome
 		this.app.route('/').get(this.weTaxiService.welcomeMessage);
+		// Taxi routes
+		this.taxiRoutes();
+	};
+
+	public taxiRoutes = () => {
 		// All taxies
 		this.app.route('/taxi/all-taxies').get(this.weTaxiService.getAllTaxies);
 		// Add taxi
 		this.app.route('/taxi/add-new-taxi').post(this.weTaxiService.addTaxi);
+		// Update location
+		this.app
+			.route('/taxi/update-location')
+			.post(this.weTaxiService.updateLocation);
 		// Delete all
 		this.app.route('/taxi/delete-all').delete(this.weTaxiService.deleteAllData);
 	};
