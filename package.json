@@ -50,6 +50,6 @@
     "express-list-endpoints": "^4.0.1",
     "mongoose": "^5.9.20",
     "morgan-body": "^2.4.14",
-    "npm": "^6.14.5"
+    "npm": "^6.14.6"
   }
 }
