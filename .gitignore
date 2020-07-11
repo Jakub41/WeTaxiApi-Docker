@@ -152,4 +152,6 @@ data
 # Ignore all local history of files
 .history
 
+.zhsrc
+
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,macos
