@@ -12,9 +12,9 @@ if [ "$#" -eq 0 ] || [ $1 = "-h" ] || [ $1 = "--help" ]; then
     echo "  -h, --help    Prints usage."
     echo ""
     echo "Commands:"
-    echo "  $CLEAN      - Stop and Remove imoney containers."
-    echo "  $RUN        - Build and Run imoney."
-    echo "  $STOP       - Stop imoney."
+    echo "  $CLEAN      - Stop and Remove containers."
+    echo "  $RUN        - Build and Run containers."
+    echo "  $STOP       - Stop containers."
     exit
 fi
 
@@ -33,9 +33,9 @@ run() {
 }
 
 stop_existing() {
-    MYAPP="$(docker ps --all --quiet --filter=name=myapp)"
-    REDIS="$(docker ps --all --quiet --filter=name=myapp-redis)"
-    MONGO="$(docker ps --all --quiet --filter=name=myapp-mongo)"
+    MYAPP="$(docker ps --all --quiet --filter=name=wetaxitask_api_dev)"
+    REDIS="$(docker ps --all --quiet --filter=name=wetaxitask_redis)"
+    MONGO="$(docker ps --all --quiet --filter=name=wetaxitask_mongodb)"
 
     if [ -n "$MYAPP" ]; then
         docker stop $MYAPP

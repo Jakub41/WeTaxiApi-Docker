@@ -3,10 +3,10 @@ import { Request, Response } from 'express';
 
 export class WeTaxiServiceSimulation {
 	private processStarted = false;
+	private allowSimulation = true;
 
 	// Adding a taxi
 	public addTaxi = async (taxiNumber: string): Promise<any> => {
-		console.log('Simulation start >>> ');
 		try {
 			const newTaxi = new models.Taxi({ taxiNumber: taxiNumber });
 			return await newTaxi.save();
@@ -196,10 +196,22 @@ export class WeTaxiServiceSimulation {
 						);
 					}
 				}
+				console.log(
+					'-------------- Starting Taxi Simulation -------------------'
+				);
 				setInterval(() => {
 					// running simulation in every 15 seconds with the dummy data added
-					this.runWithIntervals();
+					if (this.allowSimulation) {
+						this.runWithIntervals();
+					}
 				}, 15000);
+				// Run simulation for a defined time ex 60s
+				setTimeout(() => {
+					this.allowSimulation = false;
+					console.log(
+						'-------------- Finished Taxi Simulation -------------------'
+					);
+				}, 60000);
 			}
 			return res.status(200).send({ result: 'Success' });
 		} catch (e) {
