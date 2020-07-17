@@ -1,6 +1,8 @@
 import { Application } from 'express';
 import { WeTaxiService } from './services/weTaxi.service';
 import { WeTaxiServiceSimulation } from './services/weTaxi.service.simulation';
+import { Request, Response } from 'express';
+import listEndpoints from 'express-list-endpoints';
 
 export class Controller {
 	private weTaxiService: WeTaxiService;
@@ -16,6 +18,12 @@ export class Controller {
 	public routes = () => {
 		// Welcome
 		this.app.route('/').get(this.weTaxiService.welcomeMessage);
+		// List of endpoints
+		this.app.route('/endpoints').get(
+			async (req: Request, res: Response): Promise<Response> => {
+				return res.status(200).send(listEndpoints(this.app));
+			}
+		);
 		// Taxi routes
 		this.taxiRoutes();
 		// Parking lot routes
