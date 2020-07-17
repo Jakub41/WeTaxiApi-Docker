@@ -33,3 +33,11 @@ export const GPS_THRESHOLD: number = parseInt(
 	process.env.GPS_THRESHOLD as string,
 	10
 );
+
+// Simulation setup
+export const SIM_DURATION: number = parseInt(
+	process.env.TIME_DURATION as string,
+	10
+);
+
+export const SIM_TIMEOUT: number = parseInt(process.env.TIMEOUT as string, 10);

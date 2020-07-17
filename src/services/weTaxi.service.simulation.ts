@@ -1,5 +1,6 @@
 import models from '../models';
 import { Request, Response } from 'express';
+import { SIM_DURATION, SIM_TIMEOUT } from '../constants/WeTaxiApi.constants';
 
 export class WeTaxiServiceSimulation {
 	private processStarted = false;
@@ -180,6 +181,7 @@ export class WeTaxiServiceSimulation {
 		try {
 			// add dummy data to db if not added previously
 			if (!this.processStarted) {
+				this.allowSimulation = true;
 				this.processStarted = true;
 				const parkingLots = await models.ParkingLot.find({});
 				for (let k = 0; k < parkingLots.length; k++) {
@@ -204,14 +206,15 @@ export class WeTaxiServiceSimulation {
 					if (this.allowSimulation) {
 						this.runWithIntervals();
 					}
-				}, 15000);
+				}, SIM_TIMEOUT);
 				// Run simulation for a defined time ex 60s
 				setTimeout(() => {
 					this.allowSimulation = false;
+					this.processStarted = false;
 					console.log(
 						'-------------- Finished Taxi Simulation -------------------'
 					);
-				}, 60000);
+				}, SIM_DURATION);
 			}
 			return res.status(200).send({ result: 'Success' });
 		} catch (e) {
