@@ -180,7 +180,9 @@ export class WeTaxiServiceSimulation {
 	): Promise<any> => {
 		try {
 			// add dummy data to db if not added previously
+			this.allowSimulation = true;
 			if (!this.processStarted) {
+				console.log('-------------- Starting Simulation --------------');
 				this.allowSimulation = true;
 				this.processStarted = true;
 				const parkingLots = await models.ParkingLot.find({});
@@ -210,7 +212,6 @@ export class WeTaxiServiceSimulation {
 				// Run simulation for a defined time ex 60s
 				setTimeout(() => {
 					this.allowSimulation = false;
-					this.processStarted = false;
 					console.log(
 						'-------------- Finished Taxi Simulation -------------------'
 					);
