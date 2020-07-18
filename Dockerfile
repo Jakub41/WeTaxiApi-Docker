@@ -6,19 +6,8 @@ COPY ["tsconfig.json", "package.json", "package-lock.json*", "npm-shrinkwrap.jso
 COPY ./.env /usr/src/app/.env
 RUN npm install
 ADD . /usr/src/app
+CMD npm run dev
 RUN npm run build
-# CMD npm run dev
-
-# ------------------------------------------------------
-# Production Build
-# ------------------------------------------------------
-# FROM nginx:1.19.0-alpine
-# COPY --from=base-builder /usr/src/app/dist ./dist
-# RUN rm /etc/nginx/conf.d/default.conf
-# COPY nginx/nginx.conf /etc/nginx/conf.d
-# EXPOSE 8080
-# CMD ["nginx", "-g", "daemon off;","npm", "start"]
-
 
 # Production stage
 FROM node:12.18-alpine AS production
