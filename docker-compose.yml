@@ -6,13 +6,9 @@ services:
     image: wetaxitask
     restart: always
     build: .
-    env_file: ./.env
-    environment:
-      - NODE_ENV=development
+    env_file: .env
     ports:
-      - ${PORT}:${PORT}
-    volumes:
-      - .:/usr/src/app
+      - 8080:80
     links:
       - redis
       - mongodb
@@ -22,7 +18,7 @@ services:
     image: mongo:latest
     restart: always
     ports:
-      - ${DB_PORT}:${DB_PORT}
+      - 27017:27017
     volumes:
       - ./data:/data/db
     environment:
@@ -32,4 +28,4 @@ services:
     container_name: wetaxitask_redis
     image: redis:latest
     ports:
-      - ${REDIS_PORT}:${REDIS_PORT}
+      - 6379:6379
