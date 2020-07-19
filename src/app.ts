@@ -88,11 +88,15 @@ class App {
 	}
 
 	// Mongo connection to our DB
-	private setMongoConfig() {
-		mongoose.Promise = global.Promise;
-		mongoose.connect(MONGO_DB, {
-			useNewUrlParser: true,
-		});
+	private async setMongoConfig() {
+		try {
+			mongoose.Promise = global.Promise;
+			await mongoose.connect(MONGO_DB, {
+				useNewUrlParser: true,
+			});
+		} catch (e) {
+			console.log('Mongo Error >> ', e.message);
+		}
 	}
 }
 

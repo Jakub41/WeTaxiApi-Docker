@@ -1,8 +1,14 @@
 # Developpment stage
 FROM node:12.18-alpine AS base-builder
 RUN apk update
-RUN apk add --no-cache python make g++
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache --update \
+    curl \
+    python \
+    build-base \
+    libexecinfo-dev \
+    libc6-compat \
+    git \
+		g++
 WORKDIR /usr/src/app
 COPY ["tsconfig.json", "package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 ADD . /usr/src/app

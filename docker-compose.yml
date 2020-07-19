@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 services:
   wetaxitask:
@@ -6,6 +6,9 @@ services:
     image: wetaxitask
     restart: always
     build: .
+    depends_on:
+      - mongodb
+      - redis
     env_file: .env
     ports:
       - 8080:80
