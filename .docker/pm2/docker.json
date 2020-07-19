@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "app",
+      "script": "./dist/server.js",
+      "watch": ["./dist/server.js", "./dist/"],
+      "env": {
+        "NODE_ENV": "docker"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
