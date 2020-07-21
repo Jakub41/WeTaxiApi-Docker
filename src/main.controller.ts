@@ -15,7 +15,7 @@ export class Controller {
 		this.startSimulation();
 	}
 
-	public routes = () => {
+	public routes = (): unknown => {
 		// Welcome
 		this.app.route('/').get(this.weTaxiService.welcomeMessage);
 		// List of endpoints
@@ -28,6 +28,8 @@ export class Controller {
 		this.taxiRoutes();
 		// Parking lot routes
 		this.parkingLot();
+
+		return;
 	};
 
 	private taxiRoutes = () => {

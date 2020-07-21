@@ -1,13 +1,14 @@
 import models from '../models';
 import { Request, Response } from 'express';
 import { SIM_DURATION, SIM_TIMEOUT } from '../constants/WeTaxiApi.constants';
+import { ITaxi } from '../models/taxi.interface';
 
 export class WeTaxiServiceSimulation {
 	private processStarted = false;
 	private allowSimulation = true;
 
 	// Adding a taxi
-	public addTaxi = async (taxiNumber: string): Promise<any> => {
+	public addTaxi = async (taxiNumber: string): Promise<ITaxi> => {
 		try {
 			const newTaxi = new models.Taxi({ taxiNumber: taxiNumber });
 			return await newTaxi.save();
@@ -17,7 +18,7 @@ export class WeTaxiServiceSimulation {
 	};
 
 	// get the parking lots
-	public getParkingLots = (): any => {
+	public getParkingLots = () => {
 		models.ParkingLot.find({})
 			.then((parkingLots) => {
 				const parkingLotNames = parkingLots.map((lot) => lot.parkingLotName);
