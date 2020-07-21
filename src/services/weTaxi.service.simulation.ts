@@ -180,7 +180,6 @@ export class WeTaxiServiceSimulation {
 	): Promise<any> => {
 		try {
 			// add dummy data to db if not added previously
-			this.allowSimulation = true;
 			if (!this.processStarted) {
 				console.log('-------------- Starting Simulation --------------');
 				this.allowSimulation = true;
@@ -200,24 +199,46 @@ export class WeTaxiServiceSimulation {
 						);
 					}
 				}
-				console.log(
-					'-------------- Starting Taxi Simulation -------------------'
-				);
-				setInterval(() => {
-					// running simulation in every 15 seconds with the dummy data added
-					if (this.allowSimulation) {
-						this.runWithIntervals();
-					}
-				}, SIM_TIMEOUT);
-				// Run simulation for a defined time ex 60s
-				setTimeout(() => {
-					this.allowSimulation = false;
+
+				if (this.allowSimulation) {
 					console.log(
-						'-------------- Finished Taxi Simulation -------------------'
+						'-------------- Simulation process is starting -------------------'
 					);
-				}, SIM_DURATION);
+					this.allowSimulation = false;
+					const startTime = new Date().getTime();
+					const interval = setInterval(() => {
+						if (new Date().getTime() - startTime > 20000) {
+							clearInterval(interval);
+							this.allowSimulation = true;
+							console.log(
+								'-------------- Simulation process finished -------------------'
+							);
+							return;
+						} else {
+							this.runWithIntervals();
+						}
+					}, 5000);
+				}
+
+				// 	console.log(
+				// 		'-------------- Starting Taxi Simulation -------------------'
+				// 	);
+				// 	setInterval(() => {
+				// 		// running simulation in every 15 seconds with the dummy data added
+				// 		if (this.allowSimulation) {
+				// 			this.runWithIntervals();
+				// 		}
+				// 	}, SIM_TIMEOUT);
+				// 	// Run simulation for a defined time ex 60s
+				// 	setTimeout(() => {
+				// 		this.allowSimulation = false;
+				// 		console.log(
+				// 			'-------------- Finished Taxi Simulation -------------------'
+				// 		);
+				// 	}, SIM_DURATION);
+				// }
+				return res.status(200).send({ result: 'Success' });
 			}
-			return res.status(200).send({ result: 'Success' });
 		} catch (e) {
 			console.log('Error >> ', e.message);
 		}

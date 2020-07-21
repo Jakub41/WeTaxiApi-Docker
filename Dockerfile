@@ -1,6 +1,5 @@
 # Developpment stage
-FROM node:12.18-alpine AS base-builder
-RUN apk add g++ make python
+FROM node:latest AS base-builder
 WORKDIR /usr/src/app
 COPY ["tsconfig.json", "package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 COPY ./.env /usr/src/app/.env
@@ -10,7 +9,7 @@ CMD npm run dev
 RUN npm run build
 
 # Production stage
-FROM node:12.18-alpine AS production
+FROM base-builder AS production
 WORKDIR /usr/src/app
 RUN npm install --production
 COPY --from=base-builder /usr/src/app/dist ./dist
