@@ -1,21 +1,35 @@
 import { Application } from 'express';
 import { WeTaxiService } from './services/weTaxi.service';
+import { WeTaxiServiceSimulation } from './services/weTaxi.service.simulation';
+import { Request, Response } from 'express';
+import listEndpoints from 'express-list-endpoints';
 
 export class Controller {
 	private weTaxiService: WeTaxiService;
+	private weTaxiServiceSimulation: WeTaxiServiceSimulation;
 
 	constructor(private app: Application) {
 		this.weTaxiService = new WeTaxiService();
+		this.weTaxiServiceSimulation = new WeTaxiServiceSimulation();
 		this.routes();
+		this.startSimulation();
 	}
 
-	public routes = () => {
+	public routes = (): unknown => {
 		// Welcome
 		this.app.route('/').get(this.weTaxiService.welcomeMessage);
+		// List of endpoints
+		this.app.route('/endpoints').get(
+			async (req: Request, res: Response): Promise<Response> => {
+				return res.status(200).send(listEndpoints(this.app));
+			}
+		);
 		// Taxi routes
 		this.taxiRoutes();
 		// Parking lot routes
 		this.parkingLot();
+
+		return;
 	};
 
 	private taxiRoutes = () => {
@@ -50,5 +64,12 @@ export class Controller {
 		this.app
 			.route('/parking-lot/add-to-parking-lot')
 			.post(this.weTaxiService.addToParkingLot);
+	};
+
+	// To simulate the Taxi flow
+	private startSimulation = () => {
+		this.app
+			.route('/start-simulation')
+			.get(this.weTaxiServiceSimulation.startSimulation);
 	};
 }

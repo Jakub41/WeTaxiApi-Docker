@@ -61,24 +61,26 @@ class App {
 
 	// Created the parking lots if not present in the initial run
 	private async initializeParkingLot() {
-		await models.ParkingLot.find({})
-			.then((parkingLot) => {
-				if (parkingLot.length === 0) {
-					// create a new parking lots
-					for (let i = 0; i < NUMBER_OF_PARKING_LOTS; i++) {
-						const taxiQueue = [];
-						const parkingLot = new models.ParkingLot({
-							parkingLotName: 'PL:' + i,
-							availableSlots: NUMBER_OF_AVAILABLE_SLOTS,
-							taxiQueue: taxiQueue,
-						});
-						parkingLot.save();
-					}
+		try {
+			await models.Taxi.deleteMany({}).then(() =>
+				console.log('Taxi documents deleted')
+			);
+			await models.ParkingLot.deleteMany({}).then(() => {
+				console.log('Parking lot documents deleted');
+				// create a new parking lots
+				for (let i = 0; i < NUMBER_OF_PARKING_LOTS; i++) {
+					const taxiQueue = [];
+					const parkingLot = new models.ParkingLot({
+						parkingLotName: 'PL:' + i,
+						availableSlots: NUMBER_OF_AVAILABLE_SLOTS,
+						taxiQueue: taxiQueue,
+					});
+					parkingLot.save();
 				}
-			})
-			.catch((error) => {
-				console.error('Retrieve parking lots failed::', error);
 			});
+		} catch (e) {
+			console.log('Error', e.message);
+		}
 	}
 
 	private setErrors() {
