@@ -174,6 +174,7 @@ export class WeTaxiServiceSimulation {
 	}
 
 	// starting the simulation
+	// starting the simulation
 	public startSimulation = async (
 		req: Request,
 		res: Response
@@ -181,8 +182,9 @@ export class WeTaxiServiceSimulation {
 		try {
 			// add dummy data to db if not added previously
 			if (!this.processStarted) {
-				console.log('-------------- Starting Simulation --------------');
-				this.allowSimulation = true;
+				console.log(
+					'-------------- Simulation is starting -------------------'
+				);
 				this.processStarted = true;
 				const parkingLots = await models.ParkingLot.find({});
 				for (let k = 0; k < parkingLots.length; k++) {
@@ -199,48 +201,31 @@ export class WeTaxiServiceSimulation {
 						);
 					}
 				}
-
-				if (this.allowSimulation) {
-					console.log(
-						'-------------- Simulation process is starting -------------------'
-					);
-					this.allowSimulation = false;
-					const startTime = new Date().getTime();
-					const interval = setInterval(() => {
-						if (new Date().getTime() - startTime > 20000) {
-							clearInterval(interval);
-							this.allowSimulation = true;
-							console.log(
-								'-------------- Simulation process finished -------------------'
-							);
-							return;
-						} else {
-							this.runWithIntervals();
-						}
-					}, 5000);
-				}
-
-				// 	console.log(
-				// 		'-------------- Starting Taxi Simulation -------------------'
-				// 	);
-				// 	setInterval(() => {
-				// 		// running simulation in every 15 seconds with the dummy data added
-				// 		if (this.allowSimulation) {
-				// 			this.runWithIntervals();
-				// 		}
-				// 	}, SIM_TIMEOUT);
-				// 	// Run simulation for a defined time ex 60s
-				// 	setTimeout(() => {
-				// 		this.allowSimulation = false;
-				// 		console.log(
-				// 			'-------------- Finished Taxi Simulation -------------------'
-				// 		);
-				// 	}, SIM_DURATION);
-				// }
-				return res.status(200).send({ result: 'Success' });
 			}
+
+			if (this.allowSimulation) {
+				console.log(
+					'-------------- Simulation process is starting -------------------'
+				);
+				this.allowSimulation = false;
+				const startTime = new Date().getTime();
+				const interval = setInterval(() => {
+					if (new Date().getTime() - startTime > SIM_DURATION) {
+						clearInterval(interval);
+						this.allowSimulation = true;
+						console.log(
+							'-------------- Simulation process finished -------------------'
+						);
+						return;
+					} else {
+						this.runWithIntervals();
+					}
+				}, SIM_TIMEOUT);
+			}
+
+			return res.status(200).send({ result: 'Success' });
 		} catch (e) {
-			console.log('Error >> ', e.message);
+			console.log(e.message);
 		}
 	};
 }
