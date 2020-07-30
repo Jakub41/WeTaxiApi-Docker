@@ -49,7 +49,6 @@ How the simulation runs you can see it in the following screen-cast:
  ┣ 📂services
  ┃ ┣ 📜weTaxi.service.simulation.ts
  ┃ ┗ 📜weTaxi.service.ts
- ┣ 📜.DS_Store
  ┣ 📜app.ts
  ┣ 📜main.controller.ts
  ┗ 📜server.ts
