@@ -17,6 +17,11 @@ services:
       - mongodb
     expose:
       - '80'
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - app-network
 
   mongodb:
     container_name: wetaxitask_mongodb
@@ -30,6 +35,8 @@ services:
       - MONGO_INITDB_DATABASE=wetaxitask
     expose:
       - '80'
+    networks:
+      - app-network
 
   redis:
     container_name: wetaxitask_redis
@@ -38,13 +45,27 @@ services:
       - ${REDIS_PORT}:${REDIS_PORT}
     expose:
       - '80'
+    networks:
+      - app-network
 
   nginx:
     image: nginx:latest
-    container_name: nginx
+    container_name: webserver
+    restart: always
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/error.log:/etc/nginx/error_log.log
       - ./nginx/cache/:/etc/nginx/cache
     ports:
-      - 80:80
+      - '80:80'
+    links:
+      - wetaxitask
+      - mongodb
+    depends_on:
+      - wetaxitask
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
